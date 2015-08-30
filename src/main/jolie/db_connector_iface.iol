@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 type ConnectionInfo:void {
-	.pool_settings : void {
+	.pool_settings? : void {
 		.acquireIncrement?: string // default 3
 		.attributes?:string	
 		.checkoutTimeout?: string // default 0
