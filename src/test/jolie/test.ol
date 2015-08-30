@@ -21,7 +21,7 @@ main {
 	if ( #args == 0 ) {
 		println@Console("Usage: jolie test.ol table_name")()
 	} else {
-		parseIniFile@IniUtils( "myconfig.ini" )( config );
+		parseIniFile@IniUtils( "config.ini" )( config );
 		conn_req << config.db_config;
 		conn_req.pool_settings << config.pool_settings;
     	connect@DBConnector( conn_req )();
