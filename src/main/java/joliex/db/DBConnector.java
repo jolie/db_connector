@@ -76,76 +76,76 @@ public class DBConnector extends JavaService
 	private static boolean toUpperCase = false;
 	private final Object transactionMutex = new Object();
 	private final static String templateField = "_template";
-	DataSource ds_pooled = null;
+	private DataSource ds_pooled = null;
 	
-	private Map setProperties( Value request ) {
-		Map map = new HashMap();
+	private Map<String, Integer> setProperties( Value request ) {
+		Map<String, Integer> map = new HashMap();
 		
-		if ( request.getChildren( "acquireIncrement" ).size() > 0 ) {
-			map.put("acquireIncrement",request.getFirstChild( "acquireIncrement" ).intValue() );     
+		if ( request.getFirstChild("pool_settings").getChildren( "acquireIncrement" ).size() > 0 ) {
+			map.put("acquireIncrement",request.getFirstChild("pool_settings").getFirstChild( "acquireIncrement" ).intValue() );     
 		} else {
 			// default
 			map.put("acquireIncrement", 3 );     
 		}
 		
-		if ( request.getChildren( "initialPoolSize" ).size() > 0 ) {
-			map.put("initialPoolSize", request.getFirstChild( "initialPoolSize" ).intValue() );     
+		if ( request.getFirstChild("pool_settings").getChildren( "initialPoolSize" ).size() > 0 ) {
+			map.put("initialPoolSize", request.getFirstChild("pool_settings").getFirstChild( "initialPoolSize" ).intValue() );     
 		} else {
 			// default
 			map.put("initialPoolSize", 3 );     
 		}
 		
-		if ( request.getChildren( "maxIdleTime" ).size() > 0 ) {
-			map.put("maxIdleTime", request.getFirstChild( "maxIdleTime" ).intValue() );     
+		if ( request.getFirstChild("pool_settings").getChildren( "maxIdleTime" ).size() > 0 ) {
+			map.put("maxIdleTime", request.getFirstChild("pool_settings").getFirstChild( "maxIdleTime" ).intValue() );     
 		} else {
 			// default
 			map.put("maxIdleTime", 0);     
 		}
 		
-		if ( request.getChildren( "maxPoolSize" ).size() > 0 ) {
-			map.put("maxPoolSize", request.getFirstChild( "maxPoolSize" ).intValue() );     
+		if ( request.getFirstChild("pool_settings").getChildren( "maxPoolSize" ).size() > 0 ) {
+			map.put("maxPoolSize", request.getFirstChild("pool_settings").getFirstChild( "maxPoolSize" ).intValue() );     
 		} else {
 			// default
 			map.put("maxPoolSize", 15);     
 		}		
 		
-		if ( request.getChildren( "minPoolSize" ).size() > 0 ) {
-			map.put("minPoolSize", request.getFirstChild( "minPoolSize" ).intValue() );     
+		if ( request.getFirstChild("pool_settings").getChildren( "minPoolSize" ).size() > 0 ) {
+			map.put("minPoolSize", request.getFirstChild("pool_settings").getFirstChild( "minPoolSize" ).intValue() );     
 		} else {
 			// default
 			map.put("minPoolSize", 3 );     
 		}
 		
-		if ( request.getChildren( "maxConnectionAge" ).size() > 0 ) {
-			map.put("maxConnectionAge", request.getFirstChild( "maxConnectionAge" ).intValue() );     
+		if ( request.getFirstChild("pool_settings").getChildren( "maxConnectionAge" ).size() > 0 ) {
+			map.put("maxConnectionAge", request.getFirstChild("pool_settings").getFirstChild( "maxConnectionAge" ).intValue() );     
 		} else {
 			// default
 			map.put("maxConnectionAge", 0 );     
 		}
 		
-		if ( request.getChildren( "maxStatements" ).size() > 0 ) {
-			map.put("maxStatements", request.getFirstChild( "maxStatements" ).intValue());     
+		if ( request.getFirstChild("pool_settings").getChildren( "maxStatements" ).size() > 0 ) {
+			map.put("maxStatements", request.getFirstChild("pool_settings").getFirstChild( "maxStatements" ).intValue());     
 		} else {
 			// default
 			map.put("maxStatements", 0 );     
 		}
 		
-		if ( request.getChildren( "maxStatementsPerConnection" ).size() > 0 ) {
-			map.put("maxStatementsPerConnection", request.getFirstChild( "maxStatementsPerConnection" ).intValue() );     
+		if ( request.getFirstChild("pool_settings").getChildren( "maxStatementsPerConnection" ).size() > 0 ) {
+			map.put("maxStatementsPerConnection", request.getFirstChild("pool_settings").getFirstChild( "maxStatementsPerConnection" ).intValue() );     
 		} else {
 			// default
 			map.put("maxStatementsPerConnection", 0 );     
 		}
 			
-		if ( request.getChildren( "statementCacheNumDeferredCloseThreads" ).size() > 0 ) {
-			map.put("statementCacheNumDeferredCloseThreads", request.getFirstChild( "statementCacheNumDeferredCloseThreads" ).intValue() );     
+		if ( request.getFirstChild("pool_settings").getChildren( "statementCacheNumDeferredCloseThreads" ).size() > 0 ) {
+			map.put("statementCacheNumDeferredCloseThreads", request.getFirstChild("pool_settings").getFirstChild( "statementCacheNumDeferredCloseThreads" ).intValue() );     
 		} else {
 			// default
 			map.put("statementCacheNumDeferredCloseThreads", 0 );     
 		}		
 		
-		if ( request.getChildren( "maxIdleTimeExcessConnections" ).size() > 0 ) {
-			map.put("maxIdleTimeExcessConnections", request.getFirstChild( "maxIdleTimeExcessConnections" ).intValue() );     
+		if ( request.getFirstChild("pool_settings").getChildren( "maxIdleTimeExcessConnections" ).size() > 0 ) {
+			map.put("maxIdleTimeExcessConnections", request.getFirstChild("pool_settings").getFirstChild( "maxIdleTimeExcessConnections" ).intValue() );     
 		} else {
 			// default
 			map.put("maxIdleTimeExcessConnections", 0 );     
@@ -206,40 +206,62 @@ public class DBConnector extends JavaService
 		String attributes = request.getFirstChild( "attributes" ).strValue();
 		String separator = "/";
 		boolean isEmbedded = false;
-
+		
 		try {
-			if ( "postgresql".equals( driver ) ) {
-				Class.forName( "org.postgresql.Driver" );
-			} else if ( "mysql".equals( driver ) ) {
-				Class.forName( "com.mysql.jdbc.Driver" );
-			} else if ( "derby".equals( driver ) ) {
-				Class.forName( "org.apache.derby.jdbc.ClientDriver" );
-			} else if ( "sqlite".equals( driver ) ) {
-				Class.forName( "org.sqlite.JDBC" );
-			} else if ( "sqlserver".equals( driver ) ) {
-				Class.forName( "com.microsoft.sqlserver.jdbc.SQLServerDriver" );
-				separator = ";";
-				databaseName = "databaseName=" + databaseName;
-			} else if ( "as400".equals( driver ) ) {
-				Class.forName( "com.ibm.as400.access.AS400JDBCDriver" );
-			} else if ( "derby_embedded".equals( driver ) ) {
-				Class.forName( "org.apache.derby.jdbc.EmbeddedDriver" );
-				isEmbedded = true;
-				driver = "derby";
-			} else if ( "hsqldb_hsql".equals( driver )
-				|| "hsqldb_hsqls".equals( driver )
-				|| "hsqldb_http".equals( driver )
-				|| "hsqldb_https".equals( driver ) ) {
-				Class.forName( "org.hsqldb.jdbcDriver" );
-			} else if ( "hsqldb_embedded".equals( driver ) ) {
-				Class.forName( "org.hsqldb.jdbcDriver" );
-				isEmbedded = true;
-				driver = "hsqldb";
-			} else if ( "db2".equals( driver ) ) {
-				Class.forName( "com.ibm.db2.jcc.DB2Driver" );
-			} else {
-				throw new FaultException( "InvalidDriver", "Unknown type of driver: " + driver );
-			}
+		    switch( driver ) {
+			    case "postgresql" :
+					Class.forName( "org.postgresql.Driver" );
+			    break;
+					
+				case "mysql" :
+					Class.forName( "com.mysql.jdbc.Driver" );
+				break;
+					
+				case "derby" :
+					Class.forName( "org.apache.derby.jdbc.ClientDriver" );
+				break;
+				
+				case "sqlite" : 
+					Class.forName( "org.sqlite.JDBC" );
+				break;
+				
+				case "sqlserver" :
+					Class.forName( "com.microsoft.sqlserver.jdbc.SQLServerDriver" );
+					separator = ";";
+					databaseName = "databaseName=" + databaseName;
+				break;
+					
+				case "as400" : 
+					Class.forName( "com.ibm.as400.access.AS400JDBCDriver" );
+				break;
+					
+				case "derby_embedded" :
+					Class.forName( "org.apache.derby.jdbc.EmbeddedDriver" );
+					isEmbedded = true;
+					driver = "derby";
+				break;
+					
+				case "hsqldb_hsql" :
+				case "hsqldb_hsqls" :
+				case "hsqldb_http" :
+				case "hsqldb_https" :
+					Class.forName( "org.hsqldb.jdbcDriver" );
+				break;
+					
+				case  "hsqldb_embedded" :
+					Class.forName( "org.hsqldb.jdbcDriver" );
+					isEmbedded = true;
+					driver = "hsqldb";
+				break;
+					
+				case "db2" :
+					Class.forName( "com.ibm.db2.jcc.DB2Driver" );
+				break;
+					
+				default :
+					throw new FaultException( "InvalidDriver", "Unknown type of driver: " + driver );
+								
+		    }
 
 			if ( isEmbedded ) {
 				connectionString = "jdbc:" + driver + ":" + databaseName;

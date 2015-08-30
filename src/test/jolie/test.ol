@@ -1,11 +1,7 @@
-include "db_connector_iface.iol"
+include "../../main/jolie/db_connector.iol"
 include "ini_utils.iol"
 include "console.iol"
 include "string_utils.iol"
-
-outputPort DBConnector {
-Interfaces: DBConnectorIface
-}
 
 /*
 Remember to set config.ini for defining db connection.
@@ -25,8 +21,10 @@ main {
 	if ( #args == 0 ) {
 		println@Console("Usage: jolie test.ol table_name")()
 	} else {
-		parseIniFile@IniUtils( "config.ini" )( config );
-    	connect@DBConnector( config.db_config )();
+		parseIniFile@IniUtils( "myconfig.ini" )( config );
+		conn_req << config.db_config;
+		conn_req.pool_settings << config.pool_settings;
+    	connect@DBConnector( conn_req )();
     	println@Console("connected with " + connectionInfo.host )();
 		q = "SELECT * FROM " + args[0];
 		query@DBConnector( q )( result );

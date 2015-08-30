@@ -21,23 +21,25 @@
  ***************************************************************************/
 
 type ConnectionInfo:void {
-	.acquireIncrement?: string // default 3
-	.attributes?:string	
-	.checkoutTimeout?: string // default 0
+	.pool_settings : void {
+		.acquireIncrement?: string // default 3
+		.attributes?:string	
+		.checkoutTimeout?: string // default 0
+		.initialPoolSize?: string // default 3 
+		.maxConnectionAge?: string // default 0
+		.maxIdleTime?: string // default 0 
+		.maxIdleTimeExcessConnections?: string //default 0
+		.maxPoolSize?: string // default 15
+		.maxStatements?: string // default 0
+		.maxStatementsPerConnection?: string // default 0
+		.minPoolSize?: string // default 3
+		.statementCacheNumDeferredCloseThreads?: string // default 0
+	}
 	.database:string
 	.driver:string
 	.host:string
-	.initialPoolSize?: string // default 3 
-	.maxConnectionAge?: string // default 0
-	.maxIdleTime?: string // default 0 
-	.maxIdleTimeExcessConnections?: string //default 0
-	.maxPoolSize?: string // default 15
-	.maxStatements?: string // default 0
-	.maxStatementsPerConnection?: string // default 0
-	.minPoolSize?: string // default 3
 	.password:string
-	.port?:string
-	.statementCacheNumDeferredCloseThreads?: string // default 0
+	.port?:string	
 	.toLowerCase?: string // true/false
 	.toUpperCase?: string // true/false
 	.username:string
