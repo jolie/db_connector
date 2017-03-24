@@ -1,6 +1,6 @@
 # db_connector
 The db_connectors provides two tools for database connection: connection_pool_manager and db_manager.
-The connection_pool_manager provides a java tool for pool connection and the db_manager provides a tool in Jolie for database Management  
+The connection_pool_manager provides a java tool for pool connection and the db_manager provides a tool in Jolie for database management  
 # db_manager
 Jolie Tool for the database management.  
 ## 1. Introduction  
