@@ -55,13 +55,18 @@ We examine in details the fields of the request type:
 * **port** The port where the user would be connect 
 * **username** Username to log into the database  
 * **password** Password to log into the database  
-For the creation of services for the database, the user must first start the server and then the client. Then, the folder of services for the database are created. 
-### 3.1 How to create a service for database
+For the creation of services for the database, the user must first start the server and then the client. Then, the folder of services for the database are created.	
+### 3.1 How to create a service for database	
 **STEP 1**	
+	
 Run the main_table_generator.ol	
+	
 **STEP 2**	
-Initialize the configuration information of CreateDbServiceRequest of file createDbService.ol inside the folder client	
+	
+Initialize the configuration information of CreateDbServiceRequest of file createDbService.ol inside the folder client.	
+	
 **STEP 3**	
+	
 Run the createDbService.ol	
 ```
 /*The configuration information of the type CreateDbServiceRequest*/
@@ -126,6 +131,7 @@ type updateuserRequest:void {
 }
 ```	
 **GET**	
+	
 The get operation is used to get the rows with the condition of filter field.	
 ```
 type getuserRequest:void {
@@ -170,6 +176,7 @@ The ExpressionFilterType define the operator:
 * noteq: "!="	
 	
 **EXAMPLE**	
+	
 The where clause "WHERE categoria = 'Farina' AND quantita >= 12", can be described:	
 ```
 getprodottoRequest.filter.column_name = "categoria";
