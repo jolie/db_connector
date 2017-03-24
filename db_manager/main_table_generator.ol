@@ -1,4 +1,24 @@
-
+/***************************************************************************
+ *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
+ *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU Library General Public License as       *
+ *   published by the Free Software Foundation; either version 2 of the    *
+ *   License, or (at your option) any later version.                       *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU Library General Public     *
+ *   License along with this program; if not, write to the                 *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ *                                                                         *
+ *   For details about the authors of this software, see the AUTHORS file. *
+ ***************************************************************************/
 include "./public/interfaces/TableGeneratorInterface.iol"
 include "config/config.iol"
 include "runtime.iol"
@@ -31,7 +51,29 @@ inputPort MySelfIP {
 
 init {
   // The FILTER_TYPE define the type of where clause
-  FILTER_TYPE = "type ExpressionFilterType: void {
+  FILTER_TYPE = "
+  /***************************************************************************
+   *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
+   *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
+   *                                                                         *
+   *   This program is free software; you can redistribute it and/or modify  *
+   *   it under the terms of the GNU Library General Public License as       *
+   *   published by the Free Software Foundation; either version 2 of the    *
+   *   License, or (at your option) any later version.                       *
+   *                                                                         *
+   *   This program is distributed in the hope that it will be useful,       *
+   *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+   *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+   *   GNU General Public License for more details.                          *
+   *                                                                         *
+   *   You should have received a copy of the GNU Library General Public     *
+   *   License along with this program; if not, write to the                 *
+   *   Free Software Foundation, Inc.,                                       *
+   *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+   *                                                                         *
+   *   For details about the authors of this software, see the AUTHORS file. *
+   ***************************************************************************/
+   type ExpressionFilterType: void {
       .eq?: bool
       .gt?: bool
       .lt?: bool
@@ -89,7 +131,7 @@ init {
   getLocalLocation@Runtime( )( MySelf.location );
   _main_init = "main {\n";
   _main_end = "}\n";
-  println@Console("The Automatic Service Running...")()
+  println@Console("Running...")()
 }
 
 define _operation_init {
@@ -104,6 +146,7 @@ main {
   // This service is used to create the service of Database
   [ createDbService( request )( response ) {
         // connect to the database
+        tableName = "";
 
         driver = request.driver;
 
@@ -215,7 +258,29 @@ main {
       // The file config.ini is the file of configuration used to connect with the database
       undef( file );
       file.filename = "db_services/" + request.database + "_handler_service/config.ini";
-      file.content = "[db_connection]\nHOST=" + request.host + "\n"
+      file.content = "
+      /***************************************************************************
+       *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
+       *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
+       *                                                                         *
+       *   This program is free software; you can redistribute it and/or modify  *
+       *   it under the terms of the GNU Library General Public License as       *
+       *   published by the Free Software Foundation; either version 2 of the    *
+       *   License, or (at your option) any later version.                       *
+       *                                                                         *
+       *   This program is distributed in the hope that it will be useful,       *
+       *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+       *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+       *   GNU General Public License for more details.                          *
+       *                                                                         *
+       *   You should have received a copy of the GNU Library General Public     *
+       *   License along with this program; if not, write to the                 *
+       *   Free Software Foundation, Inc.,                                       *
+       *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+       *                                                                         *
+       *   For details about the authors of this software, see the AUTHORS file. *
+       ***************************************************************************/
+       [db_connection]\nHOST=" + request.host + "\n"
                       + "DRIVER=" + request.driver + "\n"
                       + "PORT=" + request.port + "\n"
                       + "DATABASE=" + request.database + "\n"
@@ -227,7 +292,29 @@ main {
       // The file locations contains the constant variable of the location
       undef( file );
       file.filename = "db_services/" + request.database + "_handler_service/locations.iol";
-      file.content = "constants{\n"
+      file.content = "
+      /***************************************************************************
+       *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
+       *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
+       *                                                                         *
+       *   This program is free software; you can redistribute it and/or modify  *
+       *   it under the terms of the GNU Library General Public License as       *
+       *   published by the Free Software Foundation; either version 2 of the    *
+       *   License, or (at your option) any later version.                       *
+       *                                                                         *
+       *   This program is distributed in the hope that it will be useful,       *
+       *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+       *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+       *   GNU General Public License for more details.                          *
+       *                                                                         *
+       *   You should have received a copy of the GNU Library General Public     *
+       *   License along with this program; if not, write to the                 *
+       *   Free Software Foundation, Inc.,                                       *
+       *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+       *                                                                         *
+       *   For details about the authors of this software, see the AUTHORS file. *
+       ***************************************************************************/
+       constants{\n"
                         + "\t" + request.database + "=\"socket://localhost:9100\"\n"
                         + "}";
       writeFile@File( file )();
@@ -256,54 +343,69 @@ main {
       //The init_behaviour contains the WHERE_FILTER and init of the main_automatic
       // In this part of code the connection with the database is initializzed
       init_behaviour = "
-define __where {\n" + WHERE_FILTER + "}\n"
-
-+
-
-"init {
-      parseIniFile@IniUtils( \"config.ini\" )( config );
-      HOST = config.db_connection.HOST;
-      DRIVER = config.db_connection.DRIVER;
-      PORT = int( config.db_connection.PORT );
-      DATABASE = config.db_connection.DATABASE;
-      USERNAME = config.db_connection.USERNAME;
-      PASSWORD = config.db_connection.PASSWORD;
-      scope( connection_scope ) {
+      define __where {\n" + WHERE_FILTER + "}\n"+
+      "init {
+        parseIniFile@IniUtils( \"config.ini\" )( config );
+        HOST = config.db_connection.HOST;
+        DRIVER = config.db_connection.DRIVER;
+        PORT = int( config.db_connection.PORT );
+        DATABASE = config.db_connection.DATABASE;
+        USERNAME = config.db_connection.USERNAME;
+        PASSWORD = config.db_connection.PASSWORD;
+        scope( connection_scope ) {
           install( ConnectionError => valueToPrettyString@StringUtils( connection_scope.ConnectionError )( s );
-                                      println@Console( s )();
-                                      exit
+          println@Console( s )();
+          exit
           );
           with( connectionInfo ) {
-                .host = HOST;
-                .driver = DRIVER;
-                .port = PORT;
-                .database = DATABASE;
-                .username = USERNAME;
-                .password = PASSWORD
+            .host = HOST;
+            .driver = DRIVER;
+            .port = PORT;
+            .database = DATABASE;
+            .username = USERNAME;
+            .password = PASSWORD
           };
           connect@Database( connectionInfo )()
-      };
-      println@Console(\"Running...\")()
- }\n";
+        };
+        println@Console(\"Running...\")()
+        }\n";
 
 //The header of main_automatic contains all the necessary include
 //and the inputPort of our automatic service
       behaviour_header = "
-include \"public/types/" + request.database + "DatabaseCommonTypes.iol\"
-include \"public/interfaces/includes.iol\"
-
-include \"database.iol\"
-include \"ini_utils.iol\"
-include \"console.iol\"
-include \"string_utils.iol\"
-include \"locations.iol\"
-
-execution{ concurrent }
-
-inputPort " + request.database + "{
-    Location: \"local\"
-    Protocol: sodep
-    Interfaces:";
+    /***************************************************************************
+       *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
+       *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
+       *                                                                         *
+       *   This program is free software; you can redistribute it and/or modify  *
+       *   it under the terms of the GNU Library General Public License as       *
+       *   published by the Free Software Foundation; either version 2 of the    *
+       *   License, or (at your option) any later version.                       *
+       *                                                                         *
+       *   This program is distributed in the hope that it will be useful,       *
+       *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+       *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+       *   GNU General Public License for more details.                          *
+       *                                                                         *
+       *   You should have received a copy of the GNU Library General Public     *
+       *   License along with this program; if not, write to the                 *
+       *   Free Software Foundation, Inc.,                                       *
+       *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+       *                                                                         *
+       *   For details about the authors of this software, see the AUTHORS file. *
+       ***************************************************************************/
+       include \"public/types/" + request.database + "DatabaseCommonTypes.iol\"
+       include \"public/interfaces/includes.iol\"
+       include \"database.iol\"
+       include \"ini_utils.iol\"
+       include \"console.iol\"
+       include \"string_utils.iol\"
+       include \"locations.iol\"
+       execution{ concurrent }
+       inputPort " + request.database + "{
+         Location: \"local\"
+         Protocol: sodep
+         Interfaces:";
 
     // For eaxh table the service are created and information are passed
     // with the variable create_req.
@@ -376,13 +478,6 @@ inputPort " + request.database + "{
         file.content -> create_res.interface;
         writeFile@File( file )();
 
-        undef( file );
-        // Creationt of the file includes.iol, that contains all the interfaces for the table
-        file.filename = token + "/public/interfaces/includes.iol";
-        file.content = "include \"" + create_req.table.table_name + "Interface.iol\"\n";
-        file.append = 1;
-        writeFile@File( file )();
-
         // The interface of the inputPort are added to Interfaces clause
         if ( i > 0 ) {
               behaviour_header += ",\n\t\t\t"
@@ -391,8 +486,41 @@ inputPort " + request.database + "{
 
         behaviour += "// " + create_req.table.table_name + "\n";
         behaviour += create_res.behaviour + "\n\n";
-        println@Console("Done.")()
+        println@Console("Done.")();
+        tableName[i] = create_req.table.table_name
     };
+
+    undef( file );
+    // Creationt of the file includes.iol, that contains all the interfaces for the table
+    file.filename = token + "/public/interfaces/includes.iol";
+    content = "
+    /***************************************************************************
+     *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
+     *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
+     *                                                                         *
+     *   This program is free software; you can redistribute it and/or modify  *
+     *   it under the terms of the GNU Library General Public License as       *
+     *   published by the Free Software Foundation; either version 2 of the    *
+     *   License, or (at your option) any later version.                       *
+     *                                                                         *
+     *   This program is distributed in the hope that it will be useful,       *
+     *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+     *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+     *   GNU General Public License for more details.                          *
+     *                                                                         *
+     *   You should have received a copy of the GNU Library General Public     *
+     *   License along with this program; if not, write to the                 *
+     *   Free Software Foundation, Inc.,                                       *
+     *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+     *                                                                         *
+     *   For details about the authors of this software, see the AUTHORS file. *
+     ***************************************************************************/\n";
+     for ( y=0, y < #tableName, y++ ) {
+       content += "include \"" + tableName[y] + "Interface.iol\"\n"
+     };
+    file.content = content;
+    writeFile@File( file )();
+
     // The main_automatic with is content is created
     undef( file );
     file.filename = token + "/main_automatic_" + request.database  + ".ol";
@@ -412,7 +540,29 @@ inputPort " + request.database + "{
       // Creation of the main_custom with is content
       // This main contains a defaultService
       file.filename = dirPath + "/custom_service/main_custom_" + request.database + ".ol";
-      file.content = "include \"public/interfaces/custom_interface_" + request.database + ".iol\"
+      file.content = "
+      /***************************************************************************
+       *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
+       *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
+       *                                                                         *
+       *   This program is free software; you can redistribute it and/or modify  *
+       *   it under the terms of the GNU Library General Public License as       *
+       *   published by the Free Software Foundation; either version 2 of the    *
+       *   License, or (at your option) any later version.                       *
+       *                                                                         *
+       *   This program is distributed in the hope that it will be useful,       *
+       *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+       *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+       *   GNU General Public License for more details.                          *
+       *                                                                         *
+       *   You should have received a copy of the GNU Library General Public     *
+       *   License along with this program; if not, write to the                 *
+       *   Free Software Foundation, Inc.,                                       *
+       *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+       *                                                                         *
+       *   For details about the authors of this software, see the AUTHORS file. *
+       ***************************************************************************/
+      include \"public/interfaces/custom_interface_" + request.database + ".iol\"
       inputPort customService {
         Location: \"local\"
         Protocol: sodep
@@ -429,7 +579,29 @@ inputPort " + request.database + "{
       file.filename = dirPath + "/custom_service/public/interfaces/custom_interface_" + request.database + ".iol";
       mkdir@File(dirPath + "/custom_service/public" )();
       mkdir@File(dirPath + "/custom_service/public/interfaces" )();
-      file.content = "interface interfaceCustom {
+      file.content = "
+      /***************************************************************************
+       *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
+       *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
+       *                                                                         *
+       *   This program is free software; you can redistribute it and/or modify  *
+       *   it under the terms of the GNU Library General Public License as       *
+       *   published by the Free Software Foundation; either version 2 of the    *
+       *   License, or (at your option) any later version.                       *
+       *                                                                         *
+       *   This program is distributed in the hope that it will be useful,       *
+       *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+       *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+       *   GNU General Public License for more details.                          *
+       *                                                                         *
+       *   You should have received a copy of the GNU Library General Public     *
+       *   License along with this program; if not, write to the                 *
+       *   Free Software Foundation, Inc.,                                       *
+       *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+       *                                                                         *
+       *   For details about the authors of this software, see the AUTHORS file. *
+       ***************************************************************************/
+       interface interfaceCustom {
         RequestResponse: defaultService( void )( string )
         }";
       writeFile@File( file )();
@@ -447,6 +619,27 @@ inputPort " + request.database + "{
       };
       // The main embed the main_custom and the main_automatic and define the inpuPort of the service
       file.content = "
+      /***************************************************************************
+       *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
+       *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
+       *                                                                         *
+       *   This program is free software; you can redistribute it and/or modify  *
+       *   it under the terms of the GNU Library General Public License as       *
+       *   published by the Free Software Foundation; either version 2 of the    *
+       *   License, or (at your option) any later version.                       *
+       *                                                                         *
+       *   This program is distributed in the hope that it will be useful,       *
+       *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+       *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+       *   GNU General Public License for more details.                          *
+       *                                                                         *
+       *   You should have received a copy of the GNU Library General Public     *
+       *   License along with this program; if not, write to the                 *
+       *   Free Software Foundation, Inc.,                                       *
+       *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+       *                                                                         *
+       *   For details about the authors of this software, see the AUTHORS file. *
+       ***************************************************************************/
       include \"automatic_service/public/interfaces/includes.iol\"
       include \"custom_service/public/interfaces/custom_interface_" + request.database + ".iol\"
       include \"locations.iol\"
@@ -484,7 +677,30 @@ inputPort " + request.database + "{
   // This service create the principals oeration of the database
   [ createService4Table( request )( response ) {
 
-        response.interface = "include \"../types/" + request.database + "DatabaseCommonTypes.iol\"\n";
+        response.interface = "
+
+        /***************************************************************************
+         *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
+         *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
+         *                                                                         *
+         *   This program is free software; you can redistribute it and/or modify  *
+         *   it under the terms of the GNU Library General Public License as       *
+         *   published by the Free Software Foundation; either version 2 of the    *
+         *   License, or (at your option) any later version.                       *
+         *                                                                         *
+         *   This program is distributed in the hope that it will be useful,       *
+         *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+         *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+         *   GNU General Public License for more details.                          *
+         *                                                                         *
+         *   You should have received a copy of the GNU Library General Public     *
+         *   License along with this program; if not, write to the                 *
+         *   Free Software Foundation, Inc.,                                       *
+         *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+         *                                                                         *
+         *   For details about the authors of this software, see the AUTHORS file. *
+         ***************************************************************************/
+        include \"../types/" + request.database + "DatabaseCommonTypes.iol\"\n";
         // Creation of the operation name for each operation
         if ( !request.table.is_view ) {
               if ( is_defined( request.table.create_operation_name ) ) {
