@@ -19,8 +19,8 @@
  *                                                                         *
  *   For details about the authors of this software, see the AUTHORS file. *
  ***************************************************************************/
-include "./public/interfaces/TableGeneratorInterface.iol"
-include "config/config.iol"
+include "../public/interfaces/TableGeneratorInterface.iol"
+include "../config/config.iol"
 include "runtime.iol"
 include "console.iol"
 include "database.iol"
@@ -231,15 +231,15 @@ main {
       };
 
       // the folder of the Database service are created with its folder automatic_service
-      token = "db_services/" + request.database + "_handler_service/automatic_service";
+      token = "../db_services/" + request.database + "_handler_service/automatic_service";
       mkdir@File( token )();
       // the lib folder are created
-      mkdir@File( "db_services/" + request.database + "_handler_service/lib" )();
+      mkdir@File( "../db_services/" + request.database + "_handler_service/lib" )();
       undef( file );
       file.filename = "lib/autoconf1_0_0.jar";
       file.format = "binary";
       readFile@File( file )( autoconf );
-      file.filename = "db_services/" + request.database + "_handler_service/lib/autoconf1_0_0.jar";
+      file.filename = "../db_services/" + request.database + "_handler_service/lib/autoconf1_0_0.jar";
       file.content -> autoconf;
       writeFile@File( file )();
 
@@ -257,7 +257,7 @@ main {
       // generate config.ini file
       // The file config.ini is the file of configuration used to connect with the database
       undef( file );
-      file.filename = "db_services/" + request.database + "_handler_service/config.ini";
+      file.filename = "../db_services/" + request.database + "_handler_service/config.ini";
       file.content =
       "; **************************************************************************
        ;   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>           *
@@ -292,7 +292,7 @@ main {
       // generate locations.ini
       // The file locations contains the constant variable of the location
       undef( file );
-      file.filename = "db_services/" + request.database + "_handler_service/locations.iol";
+      file.filename = "../db_services/" + request.database + "_handler_service/locations.iol";
       file.content =
       "/***************************************************************************
        *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
@@ -326,7 +326,7 @@ main {
           file.filename = "lib/jdbc-sqlserver.jar";
           file.format = "binary";
           readFile@File( file )( driverfile );
-          file.filename = "db_services/" + request.database + "_handler_service/lib/jdbc-sqlserver.jar";
+          file.filename = "../db_services/" + request.database + "_handler_service/lib/jdbc-sqlserver.jar";
           file.content -> driverfile;
           writeFile@File( file )()
       } else if ( request.driver == "postgresql" ) {
@@ -334,7 +334,7 @@ main {
           file.filename = "lib/jdbc-postgresql.jar";
           file.format = "binary";
           readFile@File( file )( driverfile );
-          file.filename = "db_services/" + request.database + "_handler_service/lib/jdbc-postgresql.jar";
+          file.filename = "../db_services/" + request.database + "_handler_service/lib/jdbc-postgresql.jar";
           file.content -> driverfile;
           writeFile@File( file )()
       } else {
@@ -531,9 +531,9 @@ main {
     println@Console("Database table generation is finished with SUCCESS")();
 
     // In this part the custom_service is generated
-    dirPathCustom = "db_services/" + request.database + "_handler_service/custom_service";
+    dirPathCustom = "../db_services/" + request.database + "_handler_service/custom_service";
     exists@File( dirPathCustom )( exist );
-    dirPath = "db_services/" + request.database + "_handler_service";
+    dirPath = "../db_services/" + request.database + "_handler_service";
     // Check if the custom_service folder exist
     if( !exist ){
       mkdir@File( dirPathCustom )();

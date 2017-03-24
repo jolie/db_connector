@@ -41,7 +41,7 @@ main {
     println@Console( main.ConnectionError )()
 	);
 
-  parseIniFile@IniUtils( "config.ini" )( config );
+  parseIniFile@IniUtils( "../config.ini" )( config );
 
   with( request ) {
     .host = config.db_connection.HOST;
