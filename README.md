@@ -63,24 +63,22 @@ Run the main_table_generator.ol
 	
 **STEP 2**	
 	
-Initialize the configuration information of CreateDbServiceRequest of file createDbService.ol inside the folder client.	
+Initialize the configuration file "config.ini" with the information necessary to connect.
+```
+/*The default configuration information of the file client/config.ini
+
+ [db_connection]
+ HOST=localhost
+ DRIVER=postgresql
+ PORT=5432
+ DATABASE=store
+ USERNAME=admin
+ PASSWORD=admin
+``` 
 	
 **STEP 3**	
 	
 Run the createDbService.ol	
-```
-/*The configuration information of the type CreateDbServiceRequest*/
-
-with( request ) {
-    .host = "localhost";
-    .driver = "postgresql";
-    .port = 5432;
-    .database = "store";
-    .table_schema = "public";
-    .username = "postgres";
-    .password = "postgres"
-  };
-``` 
 
 ## 4. Using the services for the database
 To understand how use the services for the database, we introduce the folder structure: 
