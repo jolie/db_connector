@@ -51,8 +51,8 @@ inputPort MySelfIP {
 
 init {
   // The FILTER_TYPE define the type of where clause
-  FILTER_TYPE = "
-  /***************************************************************************
+  FILTER_TYPE =
+  "/***************************************************************************
    *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
    *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
    *                                                                         *
@@ -258,29 +258,30 @@ main {
       // The file config.ini is the file of configuration used to connect with the database
       undef( file );
       file.filename = "db_services/" + request.database + "_handler_service/config.ini";
-      file.content = "
-      /***************************************************************************
-       *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
-       *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
-       *                                                                         *
-       *   This program is free software; you can redistribute it and/or modify  *
-       *   it under the terms of the GNU Library General Public License as       *
-       *   published by the Free Software Foundation; either version 2 of the    *
-       *   License, or (at your option) any later version.                       *
-       *                                                                         *
-       *   This program is distributed in the hope that it will be useful,       *
-       *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
-       *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
-       *   GNU General Public License for more details.                          *
-       *                                                                         *
-       *   You should have received a copy of the GNU Library General Public     *
-       *   License along with this program; if not, write to the                 *
-       *   Free Software Foundation, Inc.,                                       *
-       *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
-       *                                                                         *
-       *   For details about the authors of this software, see the AUTHORS file. *
-       ***************************************************************************/
-       [db_connection]\nHOST=" + request.host + "\n"
+      file.content =
+      "; **************************************************************************
+       ;   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>           *
+       ;   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>           *
+       ;                                                                          *
+       ;    This program is free software; you can redistribute it and/or modify  *
+       ;    it under the terms of the GNU Library General Public License as       *
+       ;    published by the Free Software Foundation; either version 2 of the    *
+       ;    License, or (at your option) any later version.                       *
+       ;                                                                          *
+       ;    This program is distributed in the hope that it will be useful,       *
+       ;    but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+       ;    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+       ;    GNU General Public License for more details.                          *
+       ;                                                                          *
+       ;    You should have received a copy of the GNU Library General Public     *
+       ;    License along with this program; if not, write to the                 *
+       ;    Free Software Foundation, Inc.,                                       *
+       ;    59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+       ;                                                                          *
+       ;    For details about the authors of this software, see the AUTHORS file. *
+       ; **************************************************************************
+       [db_connection]
+       HOST=" + request.host + "\n"
                       + "DRIVER=" + request.driver + "\n"
                       + "PORT=" + request.port + "\n"
                       + "DATABASE=" + request.database + "\n"
@@ -292,8 +293,8 @@ main {
       // The file locations contains the constant variable of the location
       undef( file );
       file.filename = "db_services/" + request.database + "_handler_service/locations.iol";
-      file.content = "
-      /***************************************************************************
+      file.content =
+      "/***************************************************************************
        *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
        *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
        *                                                                         *
@@ -342,8 +343,8 @@ main {
 
       //The init_behaviour contains the WHERE_FILTER and init of the main_automatic
       // In this part of code the connection with the database is initializzed
-      init_behaviour = "
-      define __where {\n" + WHERE_FILTER + "}\n"+
+      init_behaviour =
+      "define __where {\n" + WHERE_FILTER + "}\n"+
       "init {
         parseIniFile@IniUtils( \"config.ini\" )( config );
         HOST = config.db_connection.HOST;
@@ -372,8 +373,8 @@ main {
 
 //The header of main_automatic contains all the necessary include
 //and the inputPort of our automatic service
-      behaviour_header = "
-    /***************************************************************************
+      behaviour_header =
+      "/***************************************************************************
        *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
        *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
        *                                                                         *
@@ -493,8 +494,8 @@ main {
     undef( file );
     // Creationt of the file includes.iol, that contains all the interfaces for the table
     file.filename = token + "/public/interfaces/includes.iol";
-    content = "
-    /***************************************************************************
+    content =
+    "/***************************************************************************
      *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
      *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
      *                                                                         *
@@ -540,8 +541,8 @@ main {
       // Creation of the main_custom with is content
       // This main contains a defaultService
       file.filename = dirPath + "/custom_service/main_custom_" + request.database + ".ol";
-      file.content = "
-      /***************************************************************************
+      file.content =
+      "/***************************************************************************
        *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
        *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
        *                                                                         *
@@ -579,8 +580,8 @@ main {
       file.filename = dirPath + "/custom_service/public/interfaces/custom_interface_" + request.database + ".iol";
       mkdir@File(dirPath + "/custom_service/public" )();
       mkdir@File(dirPath + "/custom_service/public/interfaces" )();
-      file.content = "
-      /***************************************************************************
+      file.content =
+      "/***************************************************************************
        *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
        *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
        *                                                                         *
@@ -618,8 +619,8 @@ main {
         }
       };
       // The main embed the main_custom and the main_automatic and define the inpuPort of the service
-      file.content = "
-      /***************************************************************************
+      file.content =
+      "/***************************************************************************
        *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
        *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
        *                                                                         *
@@ -677,9 +678,8 @@ main {
   // This service create the principals oeration of the database
   [ createService4Table( request )( response ) {
 
-        response.interface = "
-
-        /***************************************************************************
+        response.interface =
+        "/***************************************************************************
          *   Copyright (C) 2016-2017 by Danilo Sorano <soranod@gmail.com>     *
          *   Copyright (C) 2016 by Claudio Guidi <guidiclaudio@gmail.com>     *
          *                                                                         *
@@ -842,9 +842,9 @@ main {
               /*
                 Setting of the insert query with the value of the table
               */
-              response.behaviour += _offset + "
-if(#optional_fields != 0){
-    q = \"INSERT INTO \\\"" + request.table.table_name + "\\\" ( \" + optional_fields  + \" ";
+              response.behaviour += _offset +
+              "if(#optional_fields != 0){
+                q = \"INSERT INTO \\\"" + request.table.table_name + "\\\" ( \" + optional_fields  + \" ";
               if ( #not_optional_fields > 0 ) { response.behaviour += "," };
               column = "";
               values = "";
@@ -863,9 +863,10 @@ if(#optional_fields != 0){
               response.behaviour += column + " ) VALUES ( \" + value_fields + \"";
               if ( #not_optional_fields > 0 ) { response.behaviour += "," };
               response.behaviour += values + " )\"\n";
-              response.behaviour += "} else {
-  q = \"INSERT INTO \\\"" + request.table.table_name + "\\\" ( " + column + " ) VALUES ( " + values + " )\"
-};\n";
+              response.behaviour +=
+              "} else {
+                q = \"INSERT INTO \\\"" + request.table.table_name + "\\\" ( " + column + " ) VALUES ( " + values + " )\"
+                };\n";
               for( x = 0, x < #request.table.table_columns, x++ ) {
                    current_column -> request.table.table_columns[x];
                    if ( !current_column.is_identity ) {

@@ -22,9 +22,12 @@
 
 include "../public/interfaces/TableGeneratorInterface.iol"
 include "../config/config.iol"
+include "ini_utils.iol"
 include "runtime.iol"
 include "console.iol"
-include "ui/swing_ui.iol"
+include "database.iol"
+include "string_utils.iol"
+include "file.iol"
 
 outputPort Test {
 Location: TableGeneratorLocation
@@ -34,18 +37,20 @@ Interfaces: TableGeneratorInterface
 
 main {
   install( ConnectionError=>
-		showMessageDialog@SwingUI( "Insert data are wrong!" )();
+		println@Console( "Insert data are wrong!" )();
     println@Console( main.ConnectionError )()
 	);
 
+  parseIniFile@IniUtils( "config.ini" )( config );
+
   with( request ) {
-    .host = "localhost";
-    .driver = "postgresql";
-    .port = 5432;
-    .database = "store";
+    .host = config.db_connection.HOST;
+    .driver = config.db_connection.DRIVER;
+    .port = int(config.db_connection.PORT);
+    .database = config.db_connection.DATABASE;
     .table_schema = "public";
-    .username = "postgres";
-    .password = "postgres"
+    .username = config.db_connection.USERNAME;
+    .password = config.db_connection.PASSWORD
   };
   createDbService@Test( request )( response )
 }
