@@ -1,10 +1,10 @@
 # db_connector
 The db_connectors provides two tools for database connection: connection_pool_manager and db_manager.
-The connection_pool_manager provides a java tool for pool connection and the db_manager provides a tool in Jolie for database management  
+The connection_pool_manager is a java tool for pool connection and the db_manager is a tool in Jolie for database management  
 # db_manager
 Jolie Tool for the database management.  
 ## 1. Introduction  
-The db_manager tool has the goal of providing the jolie services in order to simplify the management operations of a database from an already pre-existing.  
+The db_manager tool has the goal of providing the jolie service in order to simplify the management operations of a database from an already pre-existing.  
 ## 2. Folder Structure 
 The structure of the tool folder is the following:  
 * lib 
@@ -19,22 +19,22 @@ The lib folder contains the driver of the database necessary to connect with the
 The config folder contains the location to use in main_table_generatorr.ol, the default location is ``` socket://localhost:9100 ``` and the configuration file for createDbService.
 ### Public Folder 
 The public folder contains two subfolder: interfaces and types; with the interfaces and the types necessary to ```main_table_generator.ol```.  
-Inside the subfolder inteface there is ```TableGeneratorInterface.iol```, that implement the interface and the type request for createDbService, createService4Table and createType.The service createDbService sn the only used by user to create the operations services for database.  
-The subfolder types contains all the types necessary to the services of ```main_table_generator.ol```.
+Inside the subfolder inteface there is ```TableGeneratorInterface.iol```, that implement the interface and the type request for createDbService, createService4Table and createType.The operation createDbService is the only used by user to create the operations for database.  
+The subfolder types contains all the types necessary to the operations of ```main_table_generator.ol```.
 ### Client Folder
-This folder conatins the jolie file createDatabaseService.ol used to call the service createDbService of ```main_table_generator.ol```. 
+This folder conatins the jolie file createDatabaseService.ol used to call the operation createDbService of ```main_table_generator.ol```. 
 ### Server Folder 
-The creation of the services is done by the ```main_table_generator.ol```. This file implement the services **createDbService**, **createService4Table**, **createType**.
+The creation of the operations is done by the ```main_table_generator.ol```. This file implement the operations **createDbService**, **createService4Table**, **createType**.
 The tool is divided in two parts:
 * **Automatic part**  
   create specific service for the management database operation(INSERT, UPDATE, DELETE and SELECT)
 * **Custom part**  
-  allows the user to create personalized services.  
+  allows the user to create personal operations.  
 ### Db_services Folder
-This folder contains the handler services for the database. 
+This folder contains the handler operations for the database. 
 
 ## 3. Creation of the database services
-The creation of a services for the database is simply, the file createDatabaseService.ol inside folder client give a template for the user to implement the database services.The connection information are passed with the type of the request defined inside the
+The creation of a services for the database is simply, the file createDatabaseService.ol inside folder client give a template for the user to implement the database operations.The connection information are passed with the type of the request defined inside the
 TableGeneratorInterface.ol.  
 ```
 /*TableGeneratorInterface.iol*/
@@ -55,7 +55,7 @@ We examine in details the fields of the request type:
 * **port** The port where the user would be connect 
 * **username** Username to log into the database  
 * **password** Password to log into the database  
-For the creation of services for the database, the user must first start the server and then the client. Then, the folder of services for the database are created.	
+For the creation of services for the database, the user must first start the server and then the client. Then, the folder of service for the database are created.	
 ### 3.1 How to create a service for database	
 **STEP 1**	
 	
@@ -81,15 +81,15 @@ Initialize the configuration file "config.ini" with the information necessary to
 Run the createDbService.ol	
 
 ## 4. Using the services for the database
-To understand how use the services for the database, we introduce the folder structure: 
-* automatic_service: contains all the services for the database operation(INSERT, SELECT, UPDATE, DELETE)
+To understand how use the operations for the database, we introduce the folder structure: 
+* automatic_service: contains the part of the service for the database operation(INSERT, SELECT, UPDATE, DELETE)
 * custom_service: contains the customizable part by the user
 * lib: contains the database driver
 * config.ini: this file configure the information to connect with the database
 * locations.iol: this file contains a variable constant with the location of the service
 * main_"nameDB".iol: this is the core of the tools where custom and automatic part are called
 ### 4.1 Automatic service
-This part of code contains all the operation services for the database.The implementation of services are inside the jolie file main_automatic_"nameDB".ol.The operation are the following: 
+This part of code contains all the operations for the database.The implementation of operations are inside the service main_automatic_"nameDB".ol.The operation are the following: 
 * create 
 * update  
 * remove 
@@ -186,10 +186,10 @@ getprodottoRequest.filter[1].column_value = 12;
 getprodottoRequest.filter[1].expression.gteq = true;
 ``` 
 ### 4.2 Custom Service  
-The custom service allows the user to create custom operation and interface.The custom service provide the user files to define the operation (main_custom_"nameDB".ol) and where define the interface and custom type(custom_interface_"nameDB".iol). 	
+The custom service allows the user to create custom operation and interface.The custom service provide the user files to define the operations (main_custom_"nameDB".ol) and where define the interface and custom type(custom_interface_"nameDB".iol). 	
 ### 4.3 How to use the operations of tool
 *EXAMPLE* with store database	
-1. **Create a jolie file and import the interfaces "includes.iol" and "locations.iol"**	
+1. **Create a jolie service and import the interfaces "includes.iol" and "locations.iol"**	
 ```
 include "../db_services/store_handler_service/automatic_service/public/interfaces/includes.iol"
 include "../db_services/store_handler_service/locations.iol"
