@@ -71,7 +71,7 @@ Initialize the configuration file "config.ini" with the information necessary to
  HOST=localhost
  DRIVER=postgresql
  PORT=5432
- DATABASE=store
+ DATABASE=e-commerce
  USERNAME=admin
  PASSWORD=admin
 ``` 
@@ -96,13 +96,13 @@ This part of code contains all the operations for the database.The implementatio
 * get 
   
 **CREATE**  
-The operation is used to insert a row in a table inside the database.To use this operation, it's important understand the type of the request.We show an example of table 'user' of database 'store'. 
+The operation is used to insert a row in a table inside the database.To use this operation, it's important understand the type of the request.We show an example of table 'user' of database 'e-commerce'. 
 ```
 type createuserRequest:void {
-	.CodiceFiscale:string
-	.Nome?:string
-	.Cognome?:string
-	.Email?:string
+	.fiscalcode:string
+	.name?:string
+	.surname?:string
+	.email?:string
 }
 ``` 
 The request type contains the fields of table user.The primary key or generally NOT NULL value don't have the question mark, beacuse they must write to insert the row in a table.  
@@ -110,10 +110,10 @@ The request type contains the fields of table user.The primary key or generally 
 This operation is used to change one or more rows in a table.The request type does not have only the fields of table, but also has the filter field.  
 ```
 type updateuserRequest:void {
-	.CodiceFiscale?:string
-	.Nome?:string
-	.Cognome?:string
-	.Email?:string
+	.fiscalcode?:string
+	.name?:string
+	.surname?:string
+	.email?:string
 	.filter*:FilterType
 }
 ``` 
@@ -121,10 +121,10 @@ type updateuserRequest:void {
 The remove operation eliminates the rows inside the table, this operation has only filter field.
 ```
 type updateuserRequest:void {
-	.CodiceFiscale?:string
-	.Nome?:string
-	.Cognome?:string
-	.Email?:string
+	.fiscalcode?:string
+	.name?:string
+	.surname?:string
+	.email?:string
 	.filter*:FilterType
 }
 ```	
@@ -138,7 +138,7 @@ type getuserRequest:void {
 ``` 
 **FILTER**
 ```
-/*storeDatabaseCommonType.iol*/
+/*DatabaseCommonType.iol*/
 
 type ExpressionFilterType: void {
       .eq?: bool
@@ -175,41 +175,41 @@ The ExpressionFilterType define the operator:
 	
 **EXAMPLE**	
 	
-The where clause "WHERE categoria = 'Farina' AND quantita >= 12", can be described:	
+The where clause "WHERE 'product_name' = 'Fried Chicken' AND quantita >= 10", can be described:	
 ```
-getprodottoRequest.filter.column_name = "categoria";
-getprodottoRequest.filter.column_value = "Farina";
-getprodottoRequest.filter.expression.eq = true;
-getprodottoRequest.filter.and_operator = true;
-getprodottoRequest.filter[1].column_name = "quantita";
-getprodottoRequest.filter[1].column_value = 12;
-getprodottoRequest.filter[1].expression.gteq = true;
+getproductRequest.filter.column_name = "product_name";
+getproductRequest.filter.column_value = "Fried Chicken";
+getproductRequest.filter.expression.eq = true;
+getproductRequest.filter.and_operator = true;
+getproductRequest.filter[1].column_name = "quantity";
+getproductRequest.filter[1].column_value = 10;
+getproductRequest.filter[1].expression.gteq = true;
 ``` 
 ### 4.2 Custom Service  
 The custom service allows the user to create custom operation and interface.The custom service provide the user files to define the operations (main_custom_"nameDB".ol) and where define the interface and custom type(custom_interface_"nameDB".iol). 	
 ### 4.3 How to use the operations of tool
-*EXAMPLE* with store database	
+*EXAMPLE* with e-commerce database	
 1. **Create a jolie service and import the interfaces "includes.iol" and "locations.iol"**	
 ```
-include "../db_services/store_handler_service/automatic_service/public/interfaces/includes.iol"
-include "../db_services/store_handler_service/locations.iol"
+include "../db_services/e-commerce_handler_service/automatic_service/public/interfaces/includes.iol"
+include "../db_services/e-commerce_handler_service/locations.iol"
 ``` 
 2. **Create the outputPort for calling the operation**	
 ```
 outputPort Test {
-  Location: store
+  Location: e-commerce
   Protocol: sodep
-  Interfaces: userInterface, ordineInterface, prodottoInterface
+  Interfaces: userInterface, orderInterface, productInterface
 }
 ```	
 3. **Initialize the main writing the type of request and calling the operation**	
 
 ```
-createuserRequest.CodiceFiscale = "1";
-createuserRequest.Nome = "NameUser";
-createuserRequest.Cognome = "SurnameUser";
-createuserRequest.Email = "user@mail.com";
+createuserRequest.fiscalcode = "1";
+createuserRequest.name = "NameUser";
+createuserRequest.surname = "SurnameUser";
+createuserRequest.email = "user@mail.com";
 createuser@Test(createuserRequest)();
 ```	
-4. **Run the main_store.ol; the server embed the automatic service and custom service**	
+4. **Run the main_e-commerce.ol; the server embed the automatic service and custom service**	
 5. **Run the jolie file created in the client folder**
