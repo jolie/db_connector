@@ -437,7 +437,7 @@ main {
                           .is_serial = false
                         };
                         // Check the type of fields of a table
-                        if ( column.data_type == "int") {
+                        if ( column.data_type == "integer") {
                             .value_type.isint = true
                         } else if ( column.data_type == "bigint") {
                             .value_type.islong = true
@@ -842,8 +842,9 @@ main {
               /*
                 Setting of the insert query with the value of the table
               */
+
               response.behaviour += _offset +
-              "if(#optional_fields != 0){
+              "if(optional_fields != \"\"){
                 q = \"INSERT INTO \\\"" + request.table.table_name + "\\\" ( \" + optional_fields  + \" ";
               if ( #not_optional_fields > 0 ) { response.behaviour += "," };
               column = "";
@@ -890,11 +891,7 @@ main {
               for( x = 0, x < #request.table.table_columns, x++ ) {
                     current_column -> request.table.table_columns[x];
                     if( !current_column.is_identity ) {
-                          if( current_column.has_default_value || current_column.is_nullable  ) {
-                                  optional_fields[ #optional_fields ] = current_column.name
-                          } else {
-                                  not_optional_fields[ #not_optional_fields ] = current_column.name
-                          }
+                          optional_fields[ #optional_fields ] = current_column.name
                     }
               }
               ;
@@ -909,19 +906,7 @@ main {
               };
 
               response.behaviour += _offset + "q = \"UPDATE \\\"" + request.table.table_name + "\\\" SET \" + optional_fields + \"";
-              //if ( #not_optional_fields > 0 ) { response.behaviour += "," };
-              /*column = "";
-              col_index = 0; // used for inserting commas correctly
-              for( x = 0, x < #not_optional_fields, x++ ) {
-
-                    column += not_optional_fields[x] + "=:" + not_optional_fields[x];
-                    col_index++;
-
-                    if ( col_index > 0 && x < ( #not_optional_fields - 1 ) ) {
-                          column += ", "
-                    }
-              };*/
-              response.behaviour += /*column + */"\" + where;\n";
+              response.behaviour += "\" + where;\n";
 
               for( x = 0, x < #request.table.table_columns, x++ ) {
                     response.behaviour += _offset + "q." + request.table.table_columns[x].name
