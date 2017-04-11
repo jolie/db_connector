@@ -39,34 +39,34 @@ main{
   // Insert of table user
 
   createuserRequest.fiscalcode = "1";
-  createuserRequest.name = "Mattia";
-  createuserRequest.surname = "Conti";
-  createuserRequest.email = "mattia.conti@mail.com";
+  createuserRequest.name = "John";
+  createuserRequest.surname = "Silver";
+  createuserRequest.email = "john.silver@mail.com";
   createuser@Test(createuserRequest)();
 
   undef( createuserRequest );
   createuserRequest.fiscalcode = "3";
-  createuserRequest.name = "Chiara";
-  createuserRequest.surname = "Babina";
-  createuserRequest.email = "chiara.babina@mail.com";
+  createuserRequest.name = "Rick";
+  createuserRequest.surname = "Grimes";
+  createuserRequest.email = "rick.grimes@mail.com";
   createuser@Test(createuserRequest)();
 
   undef( createuserRequest );
   createuserRequest.fiscalcode = "2";
-  createuserRequest.name = "Gabriele";
-  createuserRequest.surname = "Carlucci";
-  createuserRequest.email = "gabriele.carlucci@mail.com";
+  createuserRequest.name = "Walter";
+  createuserRequest.surname = "White";
+  createuserRequest.email = "walter.white@mail.com";
   createuser@Test(createuserRequest)();
 
   undef( createuserRequest );
   createuserRequest.fiscalcode = "4";
-  createuserRequest.name = "Andrea";
-  createuserRequest.surname = "Conti";
-  createuserRequest.email = "andrea.conti@mail.com";
+  createuserRequest.name = "Rustin";
+  createuserRequest.surname = "Cohle";
+  createuserRequest.email = "rustin.cohle@mail.com";
   createuser@Test(createuserRequest)();
 
   getuserRequest.filter.column_name = "name";
-  getuserRequest.filter.column_value = "Gabriele";
+  getuserRequest.filter.column_value = "Rick";
   getuserRequest.filter.expression.eq = true;
   getuser@Test(getuserRequest)( response );
   println@Console( response.row.name )();
@@ -100,9 +100,9 @@ main{
   createorderRequest.quantity = 1;
   createorder@Test(createorderRequest)();
 
-  updateuserRequest.surname = "Sorano";
+  updateuserRequest.surname = "Smith";
   updateuserRequest.filter.column_name = "surname";
-  updateuserRequest.filter.column_value = "Conti";
+  updateuserRequest.filter.column_value = "Silver";
   updateuserRequest.filter.expression.eq = true;
   updateuser@Test(updateuserRequest)();
 
