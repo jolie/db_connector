@@ -26,6 +26,7 @@ type NativeType: void {
       .isvoid?: bool
       .isbool?: bool
       .islong?: bool
+      .israw?: bool
       .is_filter_type?: bool
       .is_custom_type?: string
 }

@@ -439,15 +439,30 @@ main {
                         // Check the type of fields of a table
                         if ( column.data_type == "integer") {
                             .value_type.isint = true
+                        } else if ( column.data_type == "smallint") {
+                            .value_type.isint = true
                         } else if ( column.data_type == "bigint") {
                             .value_type.islong = true
                         } else if ( column.data_type == "real") {
                             .value_type.isdouble = true
+                        } else if ( column.data_type == "numeric") {
+                            .value_type.isdouble = true
+                        } else if ( column.data_type == "doubleprecision") {
+                            .value_type.isdouble = true
                         } else if ( column.data_type == "long") {
                             .value_type.islong = true
-                        }
-                        else if(column.data_type == "boolean"){
+                        } else if(column.data_type == "boolean"){
                           .value_type.isbool = true
+                        } else if ( column.data_type == "varchar") {
+                            .value_type.isdouble = true
+                        } else if ( column.data_type == "text") {
+                            .value_type.isdouble = true
+                        } else if ( column.data_type == "char") {
+                            .value_type.isdouble = true
+                        } else if ( column.data_type == "bytea") {
+                            .value_type.israw = true
+                        } else if ( column.data_type == "char") {
+                            .value_type.isdouble = true
                         } else {
                             .value_type.isstring = true
                         };
